@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 class Calculator {
@@ -16,7 +14,6 @@ class Calculator {
 
         // Create a stack for operators
         Stack<Character> operatorStack = new Stack<>();
-
 
         // Define the precedence of operators
         int[] precedence = new int[256];
