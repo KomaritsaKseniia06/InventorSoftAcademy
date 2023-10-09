@@ -1,9 +1,22 @@
+import java.util.Scanner;
 import java.util.Stack;
 
 class Calculator {
     public static void main(String[] args) {
-        String exp = "6*(4/2)+3*1";
-        System.out.println(MathChallenge(exp));
+        // Prompt the user to enter a mathematical expression
+        System.out.print("Please enter a mathematical expression: ");
+
+        //Read data from console
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        // Check if the input string is empty
+        if (input.isEmpty()) {
+            System.out.println("Ooppsss, line cannot be empty! Please try again");
+        } else {
+            int result = MathChallenge(input);
+            System.out.println("Result: " + result);
+        }
     }
 
     // Method that takes the str parameter and evaluate the mathematical expression within it
