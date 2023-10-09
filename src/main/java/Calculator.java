@@ -1,14 +1,22 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 class Calculator {
+    public static void main(String[] args) {
+        String exp = "6*(4/2)+3*1";
+        System.out.println(MathChallenge(exp));
+    }
 
-    // Method to evaluate value of a postfix expression
+    // Method that takes the str parameter and evaluate the mathematical expression within it
     static int MathChallenge(String exp) {
+
         // Create a stack for operands
         Stack<Integer> operandStack = new Stack<>();
 
         // Create a stack for operators
         Stack<Character> operatorStack = new Stack<>();
+
 
         // Define the precedence of operators
         int[] precedence = new int[256];
@@ -43,16 +51,7 @@ class Calculator {
                 // according to precedence until the operator stack is empty or
                 // an operator with lower precedence is encountered
                 while (!operatorStack.isEmpty() && precedence[c] <= precedence[operatorStack.peek()]) {
-                    char operator = operatorStack.pop();
-                    int operand2 = operandStack.pop();
-                    int operand1 = operandStack.pop();
-
-                    switch (operator) {
-                        case '+' -> operandStack.push(operand1 + operand2);
-                        case '-' -> operandStack.push(operand1 - operand2);
-                        case '*' -> operandStack.push(operand1 * operand2);
-                        case '/' -> operandStack.push(operand1 / operand2);
-                    }
+                    applyOperator(operandStack, operatorStack);
                 }
 
                 // Push the current operator to the operator stack
@@ -64,16 +63,7 @@ class Calculator {
                 // Pop operators from the operator stack and apply them to operands
                 // until an open parenthesis is encountered
                 while (!operatorStack.isEmpty() && operatorStack.peek() != '(') {
-                    char operator = operatorStack.pop();
-                    int operand2 = operandStack.pop();
-                    int operand1 = operandStack.pop();
-
-                    switch (operator) {
-                        case '+' -> operandStack.push(operand1 + operand2);
-                        case '-' -> operandStack.push(operand1 - operand2);
-                        case '*' -> operandStack.push(operand1 * operand2);
-                        case '/' -> operandStack.push(operand1 / operand2);
-                    }
+                    applyOperator(operandStack, operatorStack);
                 }
 
                 // Pop the open parenthesis from the operator stack
@@ -83,27 +73,23 @@ class Calculator {
 
         // Apply any remaining operators on the stack to the operands
         while (!operatorStack.isEmpty()) {
-            char operator = operatorStack.pop();
-            int operand2 = operandStack.pop();
-            int operand1 = operandStack.pop();
-
-            switch (operator) {
-                case '+' -> operandStack.push(operand1 + operand2);
-                case '-' -> operandStack.push(operand1 - operand2);
-                case '*' -> operandStack.push(operand1 * operand2);
-                case '/' -> operandStack.push(operand1 / operand2);
-            }
+            applyOperator(operandStack, operatorStack);
         }
 
         // The final result will be at the top of the operand stack
         return operandStack.pop();
     }
 
-    // Driver program to test above functions
-    public static void main(String[] args) {
-        String exp = "6/3-1";
+    private static void applyOperator(Stack<Integer> operandStack, Stack<Character> operatorStack) {
+        char operator = operatorStack.pop();
+        int operand2 = operandStack.pop();
+        int operand1 = operandStack.pop();
 
-        // Function call
-        System.out.println(MathChallenge(exp));
+        switch (operator) {
+            case '+' -> operandStack.push(operand1 + operand2);
+            case '-' -> operandStack.push(operand1 - operand2);
+            case '*' -> operandStack.push(operand1 * operand2);
+            case '/' -> operandStack.push(operand1 / operand2);
+        }
     }
 }
